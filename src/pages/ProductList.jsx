@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Navbar from '../components/Navbar'
 import Announcement from '../components/Announcement'
-import NewsLetter from '../components/Newsletter'
+import Newsletter from '../components/Newsletter'
 import Footer from '../components/Footer'
 import Products from '../components/Products'
 
@@ -73,7 +73,7 @@ const ProductList = () => {
                 </Filter>
         </FilterContainer>
         <Products/>
-        <NewsLetter/>
+        <Newsletter/>
         <Footer/>
     </Container>
   )
