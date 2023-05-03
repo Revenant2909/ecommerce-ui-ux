@@ -38,6 +38,7 @@ const Language = styled.span`
 const SearchContainer = styled.div`
     display: flex;
     border: 0.5px solid grey;
+    height: 20px;
     font-size: 14px;
     align-items: center;
     padding: 5px;
@@ -47,6 +48,9 @@ const SearchContainer = styled.div`
 `
 const Input = styled.input`
     border: none;
+    height: 100%;
+    &:focus { border: none;
+        outline: none; }
 `
 const MenuItem = styled.div`
     margin-right: 25px;
