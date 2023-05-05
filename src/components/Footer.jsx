@@ -128,10 +128,10 @@ const Footer = () => {
         <Right>
         <Title>Contact</Title>
         <ContactItem>
-          <Room style={{marginRight:"10px"}}/> 695 , South park avenue , Toronto, Ontario. 
+          <Room style={{marginRight:"10px"}}/> Bangalore. Prestige Platina Technology Park Building 2, Block A Bangalore,
         </ContactItem>
         <ContactItem>
-          <Phone style={{marginRight:"10px"}}/> +1 234 562 782
+          <Phone style={{marginRight:"10px"}}/> +1 234 5642 782
         </ContactItem>
         <ContactItem>
           <MailOutline style={{marginRight:"10px"}} /> contact@laflame.inc

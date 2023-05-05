@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
@@ -6,6 +6,12 @@ import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 import { Add, Remove } from '@mui/icons-material';
 import { mobile } from "../responsive";
+import { useSelector } from 'react-redux';
+import StripeCheckout from 'react-stripe-checkout';
+import { userRequest } from '../requestMethods';
+import { useHistory } from 'react-router-dom';
+
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -142,6 +148,29 @@ const Button = styled.button`
 
 
 const Cart = () => {
+    const [stripeToken,setStripeToken] = useState(null);
+    const cart = useSelector(state=>state.cart);
+    const history = useHistory();
+    const onToken = (token)=>{
+        setStripeToken(token);
+    }
+    console.log(stripeToken);
+
+    useEffect(()=>{
+        const makeRequest = async () =>{
+            try {
+                const res = await userRequest.post("/checkout/payment",{
+                    tokenId:stripeToken.id,
+                    amount:cart.total*100,
+                });
+                history.push("/success");
+            } catch (err) {
+                
+            }
+        }
+       stripeToken && makeRequest();
+    },[stripeToken,cart.total,history]);
+
   return (
     <Container>
         <Navbar/>
@@ -158,66 +187,61 @@ const Cart = () => {
                </Top>
                <Bottom>
                 <Info>
-                    <Product>
+                    {cart.products.map((product)=>(
+                        <Product>
                         <ProductDetail>
-                            <Image src="https://m.media-amazon.com/images/I/516u9xd1laL._UX342_.jpg" />
+                            <Image src= {product.img} />
                             <Details>
-                                <ProductName><b>Product:</b> Funky Printed Shirt for Men </ProductName>
-                                <ProductId><b>Id:</b> 8932983</ProductId>
-                                <ProductColor color="blue"></ProductColor>
-                                <ProductSize><b>Size:</b> 39</ProductSize>
+                                <ProductName><b>Product:</b>{product.title}</ProductName>
+                                <ProductId><b>Id:</b> {product._id}</ProductId>
+                                <ProductColor color={product.color}></ProductColor>
+                                <ProductSize><b>Size:</b> {product.size} </ProductSize>
                             </Details>
                         </ProductDetail>
                         <PriceDetail>
                             <ProductAmountContainer>
                                <Add/>
-                               <ProductAmount>2</ProductAmount>
+                               <ProductAmount>{product.quantity}</ProductAmount>
                                <Remove/> 
                             </ProductAmountContainer>
-                            <ProductPrice>$ 20</ProductPrice>
+                            <ProductPrice>Rs. {product.price*product.quantity}</ProductPrice>
                         </PriceDetail>
+                        <Hr/>
                     </Product>
-                    <Hr/>
-                    <Product>
-                        <ProductDetail>
-                            <Image src="https://m.media-amazon.com/images/I/516u9xd1laL._UX342_.jpg" />
-                            <Details>
-                                <ProductName><b>Product:</b> Funky Printed Shirt for Men </ProductName>
-                                <ProductId><b>Id:</b> 8932983</ProductId>
-                                <ProductColor color="blue"></ProductColor>
-                                <ProductSize><b>Size:</b> 39</ProductSize>
-                            </Details>
-                        </ProductDetail>
-                        <PriceDetail>
-                            <ProductAmountContainer>
-                               <Add/>
-                               <ProductAmount>2</ProductAmount>
-                               <Remove/> 
-                            </ProductAmountContainer>
-                            <ProductPrice>$ 20</ProductPrice>
-                        </PriceDetail>
-                    </Product>
+                 ))
+                    }
                 </Info>
                 <Summary>
                     <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                     <SummaryItem>
                         <SummaryItemText>Subtotal</SummaryItemText>
-                        <SummaryItemPrice>$40</SummaryItemPrice>
+                        <SummaryItemPrice>Rs. {cart.total}</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryItem>
                         <SummaryItemText>Estimated Shipping</SummaryItemText>
-                        <SummaryItemPrice>$5.90</SummaryItemPrice>
+                        <SummaryItemPrice>Rs. 50</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryItem>
                         <SummaryItemText>Shipping Discount</SummaryItemText>
-                        <SummaryItemPrice>$-5.90</SummaryItemPrice>
+                        <SummaryItemPrice>Rs. -50</SummaryItemPrice>
                     </SummaryItem>
                     
                     <SummaryItem  type="total">
                         <SummaryItemText> Total</SummaryItemText>
-                        <SummaryItemPrice>$40</SummaryItemPrice>
+                        <SummaryItemPrice>Rs. {cart.total}</SummaryItemPrice>
                     </SummaryItem>
+                    <StripeCheckout
+                    name="Laf1ame store"
+                    image="https://i.ibb.co/ZKw0764/Cute-Cat-1.jpg"
+                    billingAddress
+                    shippingAddress
+                    description={`Your total is Rs. ${cart.total}`}
+                    amount={cart.total*100}
+                    token={onToken}
+                    stripeKey={KEY} 
+                    >
                     <Button>CHECKOUT NOW</Button>
+                    </StripeCheckout>
                 </Summary>
                </Bottom>
             </Wrapper>
