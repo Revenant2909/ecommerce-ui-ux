@@ -9,7 +9,7 @@ import { mobile } from "../responsive";
 import { useSelector } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
 import { userRequest } from '../requestMethods';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -43,6 +43,8 @@ const TopTexts = styled.div`
 
 const TopText = styled.span`
     text-decoration: underline;
+    color: black;
+    font-weight: 400;
     cursor: pointer;
     margin: 0px 10px;
 `;
@@ -50,6 +52,7 @@ const TopText = styled.span`
 const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-left: 18px;
     ${mobile({ flexDirection: "column" })}
 `;  
 const Info = styled.div`
@@ -58,6 +61,7 @@ const Info = styled.div`
 
 const Product = styled.div`
     display: flex;
+    margin-bottom: 10px;
     justify-content: space-between;
     ${mobile({ flexDirection: "column" })}
 `;
@@ -154,7 +158,7 @@ const Cart = () => {
     const onToken = (token)=>{
         setStripeToken(token);
     }
-    // console.log(stripeToken);
+
 
     useEffect(()=>{
         const makeRequest = async () =>{
@@ -171,6 +175,7 @@ const Cart = () => {
        stripeToken && makeRequest();
     },[stripeToken,cart.total,history]);
 
+    
   return (
     <Container>
         <Navbar/>
@@ -178,16 +183,32 @@ const Cart = () => {
             <Wrapper>
                <Title>YOUR BAG</Title> 
                <Top>
+                <Link to="/products">
                 <TopButton>CONTINUE SHOPPING</TopButton>
+                </Link>
                 <TopTexts>
-                    <TopText>Shopping Bag(2) </TopText>
+                    <TopText>Shopping Bag ({cart.quantity}) </TopText>
+                    <Link to="/wishlist">
                     <TopText>Your Wishlist</TopText>
+                    </Link>
                 </TopTexts>
-                <TopButton type="filled" >CHECKOUT</TopButton>
+                <StripeCheckout
+                    name="Laf1ame store"
+                    image="https://i.ibb.co/ZKw0764/Cute-Cat-1.jpg"
+                    billingAddress
+                    shippingAddress
+                    description={`Your total is Rs. ${cart.total}`}
+                    amount={cart.total*100}
+                    token={onToken}
+                    stripeKey={KEY} 
+                    >
+                    <TopButton type="filled" >CHECKOUT</TopButton>
+                    </StripeCheckout>
                </Top>
                <Bottom>
                 <Info>
                     {cart.products.map((product)=>(
+                        <>
                         <Product>
                         <ProductDetail>
                             <Image src= {product.img} />
@@ -206,24 +227,25 @@ const Cart = () => {
                             </ProductAmountContainer>
                             <ProductPrice>Rs. {product.price*product.quantity}</ProductPrice>
                         </PriceDetail>
-                        <Hr/>
                     </Product>
+                    <Hr/>
+                    </>
                  ))
                     }
                 </Info>
                 <Summary>
                     <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                     <SummaryItem>
-                        <SummaryItemText>Subtotal</SummaryItemText>
+                        <SummaryItemText>Subtotal :</SummaryItemText>
                         <SummaryItemPrice>Rs. {cart.total}</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryItem>
-                        <SummaryItemText>Estimated Shipping</SummaryItemText>
-                        <SummaryItemPrice>Rs. 50</SummaryItemPrice>
+                        <SummaryItemText>Estimated Shipping :</SummaryItemText>
+                        <SummaryItemPrice>Rs. 99</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryItem>
-                        <SummaryItemText>Shipping Discount</SummaryItemText>
-                        <SummaryItemPrice>Rs. -50</SummaryItemPrice>
+                        <SummaryItemText>Shipping Discount :</SummaryItemText>
+                        <SummaryItemPrice>Rs. -99</SummaryItemPrice>
                     </SummaryItem>
                     
                     <SummaryItem  type="total">

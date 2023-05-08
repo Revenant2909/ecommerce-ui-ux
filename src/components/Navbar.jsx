@@ -25,8 +25,11 @@ const Left = styled.div`
 `
 
 const Center = styled.div`
+    display: flex;
+    justify-content: center;
+    color: black;
     flex: 1;
-    font-size: 22px;
+    font-size: 36px;
     font-weight: 700;
     ${mobile({ fontSize: "24px"})}
 
@@ -64,6 +67,8 @@ const Input = styled.input`
 `
 const MenuItem = styled.div`
     margin-right: 25px;
+    color: black;
+    font-weight: 400;
     display: flex;
     font-size: 16px;
     cursor: pointer;
@@ -79,12 +84,17 @@ const Navbar = () => {
         <Left>
              <Language>EN</Language> 
              <SearchContainer>
-                <Input placeholder='Search'/>
+                <Input placeholder='Search for products,brands and more'/>
                 <Search style={{color:"grey",fontSize:"18px"}}/>
              </SearchContainer>
         </Left>
+        <Link to="/">
         <Center>LAF1AME. </Center>
+        </Link>
         <Right> 
+            <Link to="/wishlist">
+            <MenuItem>WISHLIST</MenuItem>
+            </Link>
             <Link to="/register">
             <MenuItem>REGISTER</MenuItem>
             </Link>

@@ -1,16 +1,18 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@mui/icons-material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { sliderItems } from '../data'
 import {mobile} from "../responsive"
+import { publicRequest } from '../requestMethods'
 
 const Container = styled.div`
     ${mobile({ display: "none"})}
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     position: relative;
     overflow: hidden;
+    margin-bottom: 30px;
 `
 const Arrow = styled.div`
     width: 50px;
@@ -46,17 +48,37 @@ const Slide = styled.div`
 `
 const ImgContainer = styled.div`
     height: 100%;
-    flex: 1;
+    flex: 1.75;
 `
 const InfoContainer = styled.div`
     flex: 1;
     padding: 50px;
 `
 const Image = styled.img`
-    height: 80%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 99;
 `
-const Title = styled.h1`
-    font-size: 70px;
+const Title = styled.div`
+  text-align: center;
+  color: #FFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 2px;
+  line-height:2
+`
+const TitleHead = styled.h1`
+  background-image: url(https://media.giphy.com/media/26BROrSHlmyzzHf3i/giphy.gif);
+  background-size: cover;
+  color: transparent;
+  -moz-background-clip: text;
+  -webkit-background-clip: text;
+  text-transform: uppercase;
+  font-size: 70px;
+  /* margin: 10px 0; */
 `
 const Description = styled.p`
      margin: 50px 0px;
@@ -76,6 +98,21 @@ const Button = styled.button`
 `
 const Slider = () => {
     const [slideIndex,setSlideIndex] = useState(0);
+    const[sliderData,SetSliderData] = useState([{}]);
+
+    useEffect(()=>{
+        const getSliders = async () =>{
+            try {
+                const res = await publicRequest.get(`/sliders`);
+                console.log(res);
+                // SetSliderData(res);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getSliders();
+    },[]);
+    
 
     const handleClick = (direction) => {
         if(direction==="left"){
@@ -96,7 +133,10 @@ const Slider = () => {
                     <Image src={item.img} />
                 </ImgContainer>
                 <InfoContainer>
-                    <Title>{item.title}</Title>
+                    <Title><TitleHead>
+                        {item.title}
+                        </TitleHead>
+                        </Title>
                     <Description>{item.desc}</Description>
                     <Button> Shop Now</Button>
                 </InfoContainer>

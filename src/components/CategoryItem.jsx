@@ -8,6 +8,10 @@ const Container = styled.div`
     margin: 10px;
     height: 70vh;
     position: relative;
+    &:hover{
+        transform: scale(1.025);
+        transition: all ease 1s ;
+    }
 `
 const Image = styled.img`
     width: 100%;

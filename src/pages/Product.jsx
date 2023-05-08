@@ -12,7 +12,9 @@ import { addProduct } from '../redux/cartRedux';
 import { useDispatch } from 'react-redux';
 
 
-const Container = styled.div``;
+const Container = styled.div`
+
+`;
 
 const Wrapper = styled.div`
     padding: 50px;
@@ -25,7 +27,7 @@ const ImgContainer = styled.div`
 const Image = styled.img`
     width: 100%;
     height: 70vh;
-    object-fit: cover;
+    object-fit: contain;
     ${mobile({ height: "40vh" })}
 `;
 const InfoContainer = styled.div`
@@ -34,13 +36,13 @@ const InfoContainer = styled.div`
      ${mobile({ padding: "10px" })}
 `;
 const Title = styled.h1`
-    font-weight: 200;
+    font-weight: 600;
 `;
 const Desc = styled.p`
     margin: 20px 0px;
 `;
 const Price = styled.span`
-    font-weight: 100;
+    font-weight: 300;
     font-size: 40px;
 `;
 const FilterContainer = styled.div`
@@ -56,7 +58,7 @@ const Filter = styled.div`
 `;
 const FilterTitle = styled.span`
     font-size: 20px;
-    font-weight: 200;
+    font-weight: 500;
     margin-right: 10px;
 `;
 const FilterColor = styled.div`
@@ -111,6 +113,15 @@ const Button = styled.button`
         background-color: aliceblue;
     }
 `;
+const ShippingDetails = styled.div`
+    margin-top: 50px;
+`;
+const ShippingTitle = styled.h3`
+    font-weight: 600;
+`;
+const ShippingDesc = styled.span`
+     font-weight: 300;
+`;
 
 
 const Product = () => {
@@ -162,7 +173,7 @@ const Product = () => {
                     <Desc>
                         {product.desc}
                     </Desc>
-                    <Price>Rs{product.price}</Price>
+                    <Price>₹ {product.price}</Price>
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color</FilterTitle>
@@ -187,6 +198,16 @@ const Product = () => {
                         </AmountContainer>
                         <Button onClick={handleClick}>ADD TO CART</Button>
                     </AddContainer>
+                        <ShippingDetails>
+                            <ShippingTitle>Shipping and Returns</ShippingTitle>
+                            <ShippingDesc>
+                        Free standard delivery on all orders and free return for all 
+                        qualifying orders within <b>14 days of your order delivery date.</b>
+                         Visit our Return Policy for more information.<br/><br/><br/>
+                        For any queries, please contact Customer Service at 080-35353535
+                         or via customercareindia@laf1ame.com .
+                            </ShippingDesc>
+                        </ShippingDetails>
                 </InfoContainer>
             </Wrapper>
             <Newsletter />

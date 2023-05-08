@@ -18,5 +18,8 @@ const cartRedux = createSlice({
     }
 });
 
+
+
+
 export const { addProduct } = cartRedux.actions;
 export default cartRedux.reducer;

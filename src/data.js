@@ -1,23 +1,23 @@
 export const sliderItems = [
     {
         id: 1,
-        img: "https://i.ibb.co/t8fVH1s/seductive-blonde-woman-pink-jacket-posing.jpg",
-        title: "SUMMER SALE" ,
-        desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, eum.",
+        img: "https://firebasestorage.googleapis.com/v0/b/ecommerce-59f82.appspot.com/o/summer.jpg?alt=media&token=46ed2cd6-216a-4bb6-8072-8a0927d10ef0",
+        title: "HOT SUMMERS" ,
+        desc: "Stay cool, look hot with our sizzling summer styles!",
         bg: "#ffffe0" ,
     },
     {
         id: 2,
         img: "https://i.ibb.co/t8fVH1s/seductive-blonde-woman-pink-jacket-posing.jpg",
-        title: "AUTUMN SALE" ,
+        title: "PROFESSIONAL STYLES" ,
         desc: "Lorem ipsum dolor consectetur adipisicing elit. Excepturi, eum.",
-        bg: "#ff4500" ,
+        bg: "#efefe" ,
     },
     {
         id: 3,
-        img: "https://i.ibb.co/t8fVH1s/seductive-blonde-woman-pink-jacket-posing.jpg",
-        title: "WINTER SALE" ,
-        desc: "Lorem ipsum dolor sit amet consectetur. Excepturi, eum.",
+        img: "https://firebasestorage.googleapis.com/v0/b/ecommerce-59f82.appspot.com/o/winter.jpg?alt=media&token=1f81955c-1840-414b-a425-9c398fceb7d8",
+        title: "COZY WINTER WARDROBE" ,
+        desc: "Embrace the chill with our cozy winter wardrobe!",
         bg: "#f0f8ff" ,
     }
 ]

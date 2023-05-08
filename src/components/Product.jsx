@@ -1,7 +1,9 @@
-import { FavoriteBorder, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material'
+import { Favorite, FavoriteBorder, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material'
 import React from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
+import { addWishList } from '../redux/wishListRedux';
+import { useDispatch } from 'react-redux';
 
 const Info = styled.div`
     opacity: 0;
@@ -30,6 +32,7 @@ const Container = styled.div`
     height: 350px;
     background-color: aliceblue;
     position: relative;
+    max-width: 400px;
 
     &:hover ${Info} {
         opacity: 1;
@@ -44,7 +47,10 @@ const Circle = styled.div`
 
 `
 const Image = styled.img`
-    height: 75%;
+    object-fit: contain;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
     z-index: 2;
 `
 
@@ -65,21 +71,29 @@ const Icon = styled.div`
 `;
 
 const Product = ({item}) => {
+    const dispatch = useDispatch();
+
+    const handleWish = () =>{
+        dispatch(addWishList( item ));
+    }
+
   return (
     <Container>
         <Circle/>
         <Image src={item.img} />
         <Info>
+            <Link to="/cart">
             <Icon>
                 <ShoppingCartOutlined/>
             </Icon>
-            <Link to={`/product/${item._id}`}>
+            </Link>
+            <Link to={`/product/${item._id}` } style={{color: "blue"}}>
             <Icon>
-                <SearchOutlined/>
+                <SearchOutlined style={{color: "green"}}/>
             </Icon>
             </Link>    
             <Icon>
-                <FavoriteBorder/>
+                <Favorite onClick={handleWish} style={{color: "red"}}/>
             </Icon>
         </Info>
     </Container>

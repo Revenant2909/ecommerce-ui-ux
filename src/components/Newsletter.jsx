@@ -10,13 +10,15 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 50px;
     `
 const Title = styled.h1`
     font-size: 70px;
     font-weight: 500;
+    margin-bottom: 10px;
 `
 const Description = styled.p`
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 300;
     margin-bottom: 35px;
     ${mobile({ textAlign: "center" })}
